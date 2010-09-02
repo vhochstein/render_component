@@ -72,9 +72,9 @@ end
 class ComponentsTest < ActionController::IntegrationTest #ActionController::TestCase
   
   def setup
-    @routes.draw do |map|
-      match 'callers/:action', :controller => "callers"
-      match 'callees/:action', :controller => "callees"
+    @routes.draw do 
+      match 'callers/:action', :to => 'callers'
+      match 'callees/:action', :to => 'callees'
     end
   end
   
