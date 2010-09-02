@@ -9,8 +9,7 @@ module Components
       # +parent_controller+ points to the instantiator of this controller.
       attr_accessor :parent_controller
 
-      #not implemented for RAILS3 so far
-      #alias_method_chain :session=, :render_component
+      alias_method_chain :session, :render_component
       alias_method_chain :flash, :render_component
       alias_method :component_request?, :parent_controller
     end
@@ -74,8 +73,15 @@ module Components
         end
         @component_flash
       end
-
       
+      def session_with_render_component
+        #if defined?(@parent_controller)
+        if component_request?
+          @parent_controller.session
+        else
+          @_request.session
+        end
+      end
       
     private
       def component_response(options, reuse_response)
@@ -129,10 +135,6 @@ module Components
         else
           yield
         end
-      end
-
-      def session_with_render_component=(options = {})
-        session_without_render_component=(options) unless component_request?
       end
   end
 end

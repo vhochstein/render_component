@@ -8,6 +8,11 @@ class CallersController < ActionController::Base
   def calling_from_controller_with_params
     render_component(:controller => "callees", :action => "being_called", :params => { "name" => "David" })
   end
+  
+  def calling_from_controller_with_session
+    session['name'] = 'Bernd'
+    render_component(:controller => "callees", :action => "being_called")
+  end
 
   def calling_from_controller_with_different_status_code
     render_component(:controller => "callees", :action => "blowing_up")
@@ -46,7 +51,7 @@ end
 
 class CalleesController < ActionController::Base
   def being_called
-    render :text => "#{params[:name] || "Lady"} of the House, speaking"
+    render :text => "#{params[:name] || session[:name] || "Lady"} of the House, speaking"
   end
 
   def blowing_up
@@ -135,6 +140,13 @@ class ComponentsTest < ActionController::IntegrationTest #ActionController::Test
 
     assert_equal "Lady of the House, speaking", @response.body
   end
+  
+  def test_calling_from_controller_with_session
+    get '/callers/calling_from_controller_with_session'
+    assert_equal "Bernd of the House, speaking", @response.body
+  end
+  
+  
 
 
   protected
