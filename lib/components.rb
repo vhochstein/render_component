@@ -97,7 +97,7 @@ module Components
       # determine the controller class for the component request
       def component_class(options)
         if controller = options[:controller]
-          controller.is_a?(Class) ? controller : "#{controller.camelize}Controller".constantize
+          controller.is_a?(Class) ? controller : "#{controller.to_s.camelize}Controller".constantize
         else
           self.class
         end
