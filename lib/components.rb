@@ -113,13 +113,14 @@ module Components
           
           request_params = options.symbolize_keys
           request_env = {}
-          
+
           request.env.select {|key, value| key == key.upcase || key == 'rack.input'}.each {|item| request_env[item[0]] = item[1]}
           
           request_env['REQUEST_URI'] = url_for(options)
           request_env["PATH_INFO"] = url_for(options.merge(:only_path => true))
           request_env["action_dispatch.request.symbolized_path_parameters"] = request_params 
           request_env["action_dispatch.request.parameters"] = request_params.with_indifferent_access
+          request_env["action_dispatch.request.path_parameters"] = Hash[request_params.select{|key, value| [:controller, :action].include?(key)}].with_indifferent_access
           ActionDispatch::Request.new(request_env)
         else
           request
