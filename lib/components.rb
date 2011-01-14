@@ -121,7 +121,16 @@ module Components
           request_env["action_dispatch.request.symbolized_path_parameters"] = request_params 
           request_env["action_dispatch.request.parameters"] = request_params.with_indifferent_access
           request_env["action_dispatch.request.path_parameters"] = Hash[request_params.select{|key, value| [:controller, :action].include?(key)}].with_indifferent_access
-          ActionDispatch::Request.new(request_env)
+          component_request = ActionDispatch::Request.new(request_env)
+
+          # its an internal request request forgery protection has to be disabled
+          # because otherwise forgery detection might raise an error
+          component_request.instance_eval do
+            def forgery_whitelisted?
+              true
+            end
+          end
+          component_request
         else
           request
         end
