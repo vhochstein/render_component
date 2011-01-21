@@ -121,6 +121,7 @@ module Components
           request_env["action_dispatch.request.symbolized_path_parameters"] = request_params 
           request_env["action_dispatch.request.parameters"] = request_params.with_indifferent_access
           request_env["action_dispatch.request.path_parameters"] = Hash[request_params.select{|key, value| [:controller, :action].include?(key)}].with_indifferent_access
+          request_env["warden"] = request.env["warden"] if (request.env.has_key?("warden"))
           component_request = ActionDispatch::Request.new(request_env)
 
           # its an internal request request forgery protection has to be disabled
