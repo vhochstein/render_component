@@ -1,3 +1,2 @@
-require 'components'
-require 'action_dispatch/middleware/flash'
-ActionController::Base.send :include, Components
+RENDER_COMPONENT_PLUGIN = true
+require 'render_component'
