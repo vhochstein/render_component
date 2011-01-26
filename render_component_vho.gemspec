@@ -5,7 +5,7 @@
 
 Gem::Specification.new do |s|
   s.name = %q{render_component_vho}
-  s.version = "3.0.2"
+  s.version = "3.0.3"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["David Heinemeier Hansson"]
@@ -25,6 +25,8 @@ Gem::Specification.new do |s|
     "lib/render_component.rb",
     "lib/render_component/components.rb",
     "lib/render_component/version.rb",
+    "lib/render_component_vho.rb",
+    "render_component_vho.gemspec",
     "test/abstract_unit.rb",
     "test/components_test.rb"
   ]
