@@ -1,2 +1,2 @@
-RENDER_COMPONENT_PLUGIN = true
+RENDER_COMPONENT_INSTALLED = :plugin
 require 'render_component'
