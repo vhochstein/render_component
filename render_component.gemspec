@@ -25,6 +25,7 @@ Gem::Specification.new do |s|
     "lib/render_component.rb",
     "lib/render_component/components.rb",
     "lib/render_component/version.rb",
+    "render_component.gemspec",
     "test/abstract_unit.rb",
     "test/components_test.rb"
   ]
