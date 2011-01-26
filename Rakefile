@@ -14,7 +14,7 @@ require './lib/render_component/version.rb'
 
 Jeweler::Tasks.new do |gem|
   # gem is a Gem::Specification... see http://docs.rubygems.org/read/chapter/20 for more options
-  gem.name = "render_component"
+  gem.name = "render_component_vho"
   gem.version = RenderComponent::Version::STRING
   gem.homepage = "http://github.com/vhochstein/render_component"
   gem.license = "MIT"
