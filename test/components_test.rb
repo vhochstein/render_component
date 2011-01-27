@@ -49,6 +49,9 @@ class CallersController < ActionController::Base
   def rescue_action(e) raise end
 end
 
+class ChildCallersController < CallersController
+end
+
 class CalleesController < ActionController::Base
   def being_called
     render :text => "#{params[:name] || session[:name] || "Lady"} of the House, speaking"
@@ -79,6 +82,7 @@ class ComponentsTest < ActionController::IntegrationTest #ActionController::Test
   def setup
     @routes.draw do 
       match 'callers/:action', :to => 'callers'
+      match 'child_callers/:action', :to => 'child_callers'
       match 'callees/:action', :to => 'callees'
     end
   end
@@ -144,6 +148,11 @@ class ComponentsTest < ActionController::IntegrationTest #ActionController::Test
   def test_calling_from_controller_with_session
     get '/callers/calling_from_controller_with_session'
     assert_equal "Bernd of the House, speaking", @response.body
+  end
+
+  def test_child_calling_from_template
+    get '/child_callers/calling_from_template'
+    assert_equal "Ring, ring: Lady of the House, speaking", @response.body
   end
   
   
