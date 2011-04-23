@@ -86,7 +86,7 @@ module RenderComponent
 
       private
         def component_response(options, reuse_response)
-          options[:controller] = options[:controller].to_s if options[:controller]
+          options[:controller] = options[:controller].to_s if options[:controller] && options[:controller].is_a?(Symbol)
           klass = component_class(options)
           component_request  = request_for_component(klass.controller_path, options)
           # needed ???
