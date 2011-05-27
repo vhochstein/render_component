@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{render_component_vho}
-  s.version = "3.0.3"
+  s.version = "3.1.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["David Heinemeier Hansson"]
-  s.date = %q{2011-01-26}
+  s.date = %q{2011-05-27}
   s.description = %q{Components allow you to call other actions for their rendered response while executing another action}
   s.email = %q{david@loudthinking.com}
   s.extra_rdoc_files = [
@@ -49,20 +49,20 @@ Gem::Specification.new do |s|
       s.add_development_dependency(%q<bundler>, ["~> 1.0.0"])
       s.add_development_dependency(%q<jeweler>, ["~> 1.5.2"])
       s.add_development_dependency(%q<rcov>, [">= 0"])
-      s.add_runtime_dependency(%q<railties>, ["~> 3.0.0"])
+      s.add_runtime_dependency(%q<railties>, ["~> 3.1.0"])
     else
       s.add_dependency(%q<shoulda>, [">= 0"])
       s.add_dependency(%q<bundler>, ["~> 1.0.0"])
       s.add_dependency(%q<jeweler>, ["~> 1.5.2"])
       s.add_dependency(%q<rcov>, [">= 0"])
-      s.add_dependency(%q<railties>, ["~> 3.0.0"])
+      s.add_dependency(%q<railties>, ["~> 3.1.0"])
     end
   else
     s.add_dependency(%q<shoulda>, [">= 0"])
     s.add_dependency(%q<bundler>, ["~> 1.0.0"])
     s.add_dependency(%q<jeweler>, ["~> 1.5.2"])
     s.add_dependency(%q<rcov>, [">= 0"])
-    s.add_dependency(%q<railties>, ["~> 3.0.0"])
+    s.add_dependency(%q<railties>, ["~> 3.1.0"])
   end
 end
 
