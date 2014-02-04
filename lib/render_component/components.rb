@@ -118,6 +118,7 @@ module RenderComponent
 
             request.env.select {|key, value| key == key.upcase || key == 'rack.input'}.each {|item| request_env[item[0]] = item[1]}
 
+            request_env['REQUEST_METHOD'] = "GET"
             request_env['REQUEST_URI'] = url_for(options)
             request_env["PATH_INFO"] = url_for(options.merge(:only_path => true))
             request_env["action_dispatch.request.symbolized_path_parameters"] = request_params
