@@ -34,14 +34,23 @@ module RenderComponent
     module InstanceMethods
 
       protected
+        def response_redirect(response)
+          if response.respond_to?(:to_path)
+            response.to_path
+          elsif response.is_a?(ActionDispatch::Response)
+            response.redirect_url
+          end
+        end
+
         # Renders the component specified as the response for the current method
         def render_component(options) #:doc:
           component_logging(options) do
             response = component_response(options, true)[2]
-            if response.redirect_url
+            redirect_url = response_redirect(response)
+            if redirect_url
               redirect_to response.redirect_url
             else
-              render :text => response.body, :status => response.status
+              render :html => response.body.html_safe, :status => response.status
             end
           end
         end
@@ -49,8 +58,9 @@ module RenderComponent
         # Returns the component response as a string
         def render_component_into_view(options) #:doc:
           component_logging(options) do
-            response = component_response(options, false)[2]
-            if redirected = response.redirect_url
+            response = component_response(options, true)[2]
+            redirected = response_redirect(response)
+            if redirected
               if redirected =~ %r{://}
                 location = URI.parse(redirected)
                 redirected = location.query ? "#{location.path}?#{location.query}" : location.path
@@ -121,8 +131,8 @@ module RenderComponent
             request_env['REQUEST_URI'] = url_for(options)
             request_env["PATH_INFO"] = url_for(options.merge(:only_path => true))
             request_env["action_dispatch.request.symbolized_path_parameters"] = request_params
-            request_env["action_dispatch.request.parameters"] = request_params.with_indifferent_access
-            request_env["action_dispatch.request.path_parameters"] = Hash[request_params.select{|key, value| [:controller, :action].include?(key)}].with_indifferent_access
+            request_env["action_dispatch.request.parameters"] = request_params.symbolize_keys
+            request_env["action_dispatch.request.path_parameters"] = Hash[request_params.select{|key, value| [:controller, :action].include?(key)}].symbolize_keys
             request_env["warden"] = request.env["warden"] if (request.env.has_key?("warden"))
             component_request = ActionDispatch::Request.new(request_env)
 
