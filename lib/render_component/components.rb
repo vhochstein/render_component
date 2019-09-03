@@ -1,5 +1,30 @@
 module RenderComponent
   module Components
+    module MethodsToPrepend
+      def session
+        if component_request?
+          @parent_controller.session
+        else
+          @_request.session
+        end
+      end
+
+      def flash(refresh = false) #:nodoc:
+        if @component_flash.nil? || refresh
+          @component_flash =
+            if defined?(@parent_controller)
+              @parent_controller.flash
+            elsif session['flash'].class == String
+              warn "WARNING: something, somehow, has replaced the flash by a inspect.to_s output. >>>#{session['flash']}<<<"
+              session['flash'] = ActionDispatch::Flash::FlashHash.new
+            else
+              session['flash'] ||= ActionDispatch::Flash::FlashHash.new
+            end
+        end
+        @component_flash
+      end
+    end
+
     def self.included(base) #:nodoc:
       base.class_eval do
         include InstanceMethods
@@ -9,12 +34,10 @@ module RenderComponent
         # If this controller was instantiated to process a component request,
         # +parent_controller+ points to the instantiator of this controller.
         attr_accessor :parent_controller
-
-        alias_method_chain :session, :render_component
-        # disabling since this is breaking flash..
-        #alias_method_chain :flash, :render_component
         alias_method :component_request?, :parent_controller
       end
+
+      base.prepend(MethodsToPrepend)
     end
 
     module ClassMethods
@@ -70,32 +93,6 @@ module RenderComponent
             else
               response.body.html_safe
             end
-          end
-        end
-
-
-        def flash_with_render_component(refresh = false) #:nodoc:
-          if @component_flash.nil? || refresh
-            @component_flash =
-              if defined?(@parent_controller)
-                debugger
-                @parent_controller.flash
-              elsif session['flash'].class == String
-                warn "WARNING: something, somehow, has replaced the flash by a inspect.to_s output. >>>#{session['flash']}<<<"
-                session['flash'] = ActionDispatch::Flash::FlashHash.new
-              else
-                session['flash'] ||= ActionDispatch::Flash::FlashHash.new
-              end
-          end
-          @component_flash
-        end
-
-        def session_with_render_component
-          #if defined?(@parent_controller)
-          if component_request?
-            @parent_controller.session
-          else
-            @_request.session
           end
         end
 
