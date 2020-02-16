@@ -78,10 +78,9 @@ module RenderComponent
           if @component_flash.nil? || refresh
             @component_flash =
               if defined?(@parent_controller)
-                debugger
                 @parent_controller.flash
               elsif session['flash'].class == String
-                warn "WARNING: something, somehow, has replaced the flash by a inspect.to_s output. >>>#{session['flash']}<<<"
+                warn "WARNING: something, somehow, has replaced the flash by an inspect output. >>>#{session['flash']}<<<"
                 session['flash'] = ActionDispatch::Flash::FlashHash.new
               else
                 session['flash'] ||= ActionDispatch::Flash::FlashHash.new
