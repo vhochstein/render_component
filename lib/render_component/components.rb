@@ -22,7 +22,7 @@ module RenderComponent
       def process_with_components(request, action, parent_controller = nil) #:nodoc:
         controller = new
         controller.parent_controller = parent_controller
-        controller.dispatch(action, request)
+        controller.dispatch(action, request, make_response!(request))
       end
     end
 
