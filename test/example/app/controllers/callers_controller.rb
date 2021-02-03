@@ -25,7 +25,7 @@ class CallersController < ApplicationController
   end
 
   def internal_callee
-    render :text => "Yes, ma'am"
+    render :plain => "Yes, ma'am"
   end
 
   def set_flash
@@ -44,5 +44,7 @@ class CallersController < ApplicationController
     render :inline => "<%= render_component(:controller => 'callees', :action => 'redirected') %>"
   end
 
-  def rescue_action(e) raise end
+  def rescue_action(e)
+    raise
+  end
 end

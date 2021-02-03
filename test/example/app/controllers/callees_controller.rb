@@ -1,19 +1,19 @@
 class CalleesController < ActionController::Base
   def being_called
-    render :text => "#{params[:name] || session[:name] || "Lady"} of the House, speaking"
+    render plain: "#{params[:name] || session[:name] || "Lady"} of the House, speaking"
   end
 
   def blowing_up
-    render :text => "It's game over, man, just game over, man!", :status => 500
+    render plain: "It's game over, man, just game over, man!", :status => 500
   end
 
   def set_flash
     flash[:notice] = 'My stoney baby'
-    render :text => 'flash is set'
+    render plain: 'flash is set'
   end
 
   def use_flash
-    render :text => flash[:notice] || 'no flash'
+    render plain: (flash[:notice] || 'no flash')
   end
 
   def redirected
