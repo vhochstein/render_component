@@ -69,7 +69,8 @@ Bug reports and pull requests are welcome on GitHub at https://github.com/mathie
 
 ## Copyright
 
-Copyright (c) 2007      David Heinemeier Hansson, released under the MIT license
-Copyright (c) 2010-2012 Upgrade to Rails 3.x by VHO
-Copyright (c) 2014-2015 Fixes for rails 4.x by Sergio Cambra and Mathieu Jobin
-Copyright (c) 2020      Fix for Rails 5.0 by Mathieu Jobin
+Copyright (c) 2007      Original creation by David Heinemeier Hansson, released under the MIT license
+Copyright (c) 2008      Rebirth by Pratik Naik and Dan Powell
+Copyright (c) 2010-2012 Upgrade to Rails 3.x by Volker Hochstein, Jonathan McCoy,
+Copyright (c) 2013-2015 Fixes for rails 4.x by Sergio Cambra, Richard Zheng and Mathieu Jobin
+Copyright (c) 2020-2021 Fix for Rails 5.0 by Mathieu Jobin
