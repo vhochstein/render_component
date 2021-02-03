@@ -13,4 +13,6 @@ rvm:
   - 2.5
   - 2.6
 
-script: "bundle exec rake test"
+script:
+  - cd test/example
+  - bundle exec rake test
