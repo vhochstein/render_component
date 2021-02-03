@@ -2,8 +2,8 @@ module RenderComponent
   module Components
     module MethodsToPrepend
       def session
-        if component_request?
-          @parent_controller.session
+        if parent_controller.present?
+          parent_controller.session
         else
           @_request.session
         end
@@ -12,11 +12,10 @@ module RenderComponent
       def flash(refresh = false) #:nodoc:
         if @component_flash.nil? || refresh
           @component_flash =
-            if defined?(@parent_controller)
-              @parent_controller.flash
-            elsif session['flash'].class == String
-              warn "WARNING: something, somehow, has replaced the flash by a inspect.to_s output. >>>#{session['flash']}<<<"
-              session['flash'] = ActionDispatch::Flash::FlashHash.new
+            if parent_controller&.flash.is_a?(ActionDispatch::Flash::FlashHash)
+              parent_controller.flash
+            elsif session['flash'].is_a? Array
+              session['flash'] = ActionDispatch::Flash::FlashHash.new(session['flash'].to_h)
             else
               session['flash'] ||= ActionDispatch::Flash::FlashHash.new
             end
@@ -34,7 +33,6 @@ module RenderComponent
         # If this controller was instantiated to process a component request,
         # +parent_controller+ points to the instantiator of this controller.
         attr_accessor :parent_controller
-        alias_method :component_request?, :parent_controller
       end
 
       base.prepend(MethodsToPrepend)
@@ -61,20 +59,22 @@ module RenderComponent
         def response_redirect(response)
           if response.respond_to?(:to_path)
             response.to_path
-          elsif response.is_a?(ActionDispatch::Response)
+          elsif response.respond_to?(:redirect_url)
             response.redirect_url
+          else
+            response.instance_variable_get(:@response).redirect_url
           end
         end
 
         # Renders the component specified as the response for the current method
         def render_component(options) #:doc:
           component_logging(options) do
-            response = component_response(options, true)[2]
+            component_status, component_headers, response = component_response(options)
             redirect_url = response_redirect(response)
             if redirect_url
-              redirect_to response.redirect_url
+              redirect_to redirect_url
             else
-              render :html => response.body.html_safe, :status => response.status
+              render plain: response.body, status: component_status
             end
           end
         end
@@ -82,7 +82,7 @@ module RenderComponent
         # Returns the component response as a string
         def render_component_into_view(options) #:doc:
           component_logging(options) do
-            response = component_response(options, true)[2]
+            component_status, component_headers, response = component_response(options)
             redirected = response_redirect(response)
             if redirected
               if redirected =~ %r{://}
@@ -97,14 +97,10 @@ module RenderComponent
         end
 
       private
-        def component_response(options, reuse_response)
+        def component_response(options)
           options[:controller] = options[:controller].to_s if options[:controller] && options[:controller].is_a?(Symbol)
           klass = component_class(options)
           component_request  = request_for_component(klass.controller_path, options)
-          # needed ???
-          #if reuse_response
-            #component_request.env["action_controller.instance"].instance_variable_set :@_response, request.env["action_controller.instance"].instance_variable_get(:@_response)
-          #end
           klass.process_with_components(component_request, options[:action], self)
         end
 
