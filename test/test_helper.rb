@@ -1,6 +1,5 @@
-# frozen_string_literal: true
+puts "run test from inside the rails app"
+puts "cd test/example && rake"
+puts ""
+exit 1
 
-$LOAD_PATH.unshift File.expand_path("../lib", __dir__)
-require "rails/render/component"
-
-require "minitest/autorun"
