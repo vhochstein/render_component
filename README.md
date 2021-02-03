@@ -1,3 +1,26 @@
+# Rails::Render::Component
+
+Legacy functionality from Rails 1.x and (maybe) 2.x days.
+It execute the code in the `controller#action` before rendering the view into a string.
+
+## Installation
+
+Add this line to your application's Gemfile:
+
+```ruby
+gem 'rails-render-component'
+```
+
+And then execute:
+
+    $ bundle install
+
+Or install it yourself as:
+
+    $ gem install rails-render-component
+
+## Usage
+
 Components allow you to call other actions for their rendered response while executing another action. You can either delegate
 the entire response rendering or you can mix a partial response in with your other content.
 
@@ -34,4 +57,19 @@ across many applications at once.
 
 So to repeat: Components are a special-purpose approach that can often be replaced with better use of partials and filters.
 
-Copyright (c) 2007 David Heinemeier Hansson, released under the MIT license
+## Development
+
+After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake test` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
+
+To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and the created tag, and push the `.gem` file to [rubygems.org](https://rubygems.org).
+
+## Contributing
+
+Bug reports and pull requests are welcome on GitHub at https://github.com/mathieujobin/render-component.
+
+## Copyright
+
+Copyright (c) 2007      David Heinemeier Hansson, released under the MIT license
+Copyright (c) 2010-2012 Upgrade to Rails 3.x by VHO
+Copyright (c) 2014-2015 Fixes for rails 4.x by Sergio Cambra and Mathieu Jobin
+Copyright (c) 2020      Fix for Rails 5.0 by Mathieu Jobin
