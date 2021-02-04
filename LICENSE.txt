@@ -1,4 +1,8 @@
-Copyright (c) 2013 Sergio Cambra
+Copyright (c) 2007      Original creation by David Heinemeier Hansson, released under the MIT license
+Copyright (c) 2008      Rebirth by Pratik Naik and Dan Powell
+Copyright (c) 2010-2012 Upgrade to Rails 3.x by Volker Hochstein, Jonathan McCoy,
+Copyright (c) 2013-2015 Fixes for rails 4.x by Sergio Cambra, Richard Zheng and Mathieu Jobin
+Copyright (c) 2020-2021 Fix for Rails 5.0 by Mathieu Jobin
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the

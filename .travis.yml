@@ -1,0 +1,20 @@
+language: ruby
+addons:
+  apt:
+    packages:
+      - libgmp-dev
+
+gemfile:
+  - gemfiles/Gemfile-rails.5.0.x
+  - gemfiles/Gemfile-rails.5.1.x
+  - gemfiles/Gemfile-rails.5.2.x
+  - gemfiles/Gemfile-rails.6.0.x
+  - gemfiles/Gemfile-rails.6.1.x
+
+rvm:
+  - 2.5
+  - 2.6
+
+script:
+  - cd test/example
+  - bundle exec rake test
