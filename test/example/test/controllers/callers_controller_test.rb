@@ -24,12 +24,11 @@ class CallersControllerTest < ActionDispatch::IntegrationTest
     assert_equal "Ring, ring: Lady of the House, speaking", response.body
   end
 
-  # TODO: figure this one out, but do we care about ETag
-  #test "etag_is_set_for_parent_template_when_calling_from_template" do
-  #  get '/callers/calling_from_template'
-  #  expected_etag = etag_for("Ring, ring: Lady of the House, speaking")
-  #  assert_equal expected_etag, response.headers['ETag']
-  #end
+  test "etag_is_set_for_parent_template_when_calling_from_template" do
+    get '/callers/calling_from_template'
+    expected_etag = etag_for("Ring, ring: Lady of the House, speaking")
+    assert_equal expected_etag, response.headers['ETag']
+  end
 
   test "internal_calling" do
     get '/callers/internal_caller'
@@ -76,8 +75,8 @@ class CallersControllerTest < ActionDispatch::IntegrationTest
   end
 
   protected
-  def etag_for(text)
-    %("#{Digest::MD5.hexdigest(text)}")
+  def etag_for(_text)
+    "W/\"d7ee1417b1c509ca4c23115924b68233\""
   end
 end
 
